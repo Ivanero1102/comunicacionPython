@@ -29,7 +29,7 @@ def escritura():
         if textoReserva != textoCompleto:
             lock.acquire()
             textoReserva = textoCompleto
-            print(textoCompleto)
+            print("Texto agregado: "+textoCompleto)
             lock.release()
 
 hiloEscritura = threading.Thread(target=escritura,)
