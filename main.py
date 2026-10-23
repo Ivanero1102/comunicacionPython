@@ -16,23 +16,26 @@ def agregarParte2(parte2):
     textoCompleto = textoCompleto + parte2
     lock.release()
 
+#def escrituraBasica():
+#    lock.acquire()
+#    global textoCompleto 
+#    print(textoCompleto)
+#    lock.release()
+
 def escritura():
-    lock.acquire()
-    global textoCompleto 
-    print(textoCompleto)
-    lock.release()
+    textoReserva = ""
+    while terminamos == False:
+        global textoCompleto 
+        if textoReserva != textoCompleto:
+            lock.acquire()
+            textoReserva = textoCompleto
+            print(textoCompleto)
+            lock.release()
 
-#def escritura2():
-#    textoReserva = ""
-#    while terminamos:
-#        global textoCompleto 
-#        if textoReserva != textoCompleto:
-#            lock.acquire()
-#            textoReserva = textoCompleto
-#            print(textoCompleto)
-#            lock.release()
+hiloEscritura = threading.Thread(target=escritura,)
+hiloEscritura.start()
 
-while terminamos:
+while terminamos == False:
     print("Introduce un texto, -1 corta la ejecucion")
     texto = input()
     if(texto != "-1"):
@@ -48,5 +51,5 @@ while terminamos:
     else:
         terminamos = True
 
-hiloEscritura = threading.Thread(target=escritura,)
-hiloEscritura.start()
+#hiloEscritura = threading.Thread(target=escrituraBasica,)
+#hiloEscritura.start()
