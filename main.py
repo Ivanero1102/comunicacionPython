@@ -1,6 +1,7 @@
 import threading
 texto = ""
 textoCompleto = ""
+terminamos = False
 lock = threading.Lock()
 
 def agregarParte1(parte1):
@@ -21,7 +22,17 @@ def escritura():
     print(textoCompleto)
     lock.release()
 
-while texto != "-1":
+#def escritura2():
+#    textoReserva = ""
+#    while terminamos:
+#        global textoCompleto 
+#        if textoReserva != textoCompleto:
+#            lock.acquire()
+#            textoReserva = textoCompleto
+#            print(textoCompleto)
+#            lock.release()
+
+while terminamos:
     print("Introduce un texto, -1 corta la ejecucion")
     texto = input()
     if(texto != "-1"):
@@ -34,6 +45,8 @@ while texto != "-1":
         hiloAgregarParte2 = threading.Thread(target=agregarParte2, args=(parte2,))
         hiloAgregarParte1.start()
         hiloAgregarParte2.start()
+    else:
+        terminamos = True
 
 hiloEscritura = threading.Thread(target=escritura,)
 hiloEscritura.start()
